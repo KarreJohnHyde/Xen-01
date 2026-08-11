@@ -1,13 +1,57 @@
 import { User } from 'firebase/auth'
 import { TiltCard } from './ui/TiltCard'
 import { Project, domainColorMap } from '../data/projects'
+import { TechIcon } from './ui/TechIcon'
+import { MermaidDiagram } from './ui/MermaidDiagram'
+
+const getArchitectureChart = (domain: string) => {
+  switch (domain) {
+    case 'NLP':
+      return `
+graph TD
+    A[Client UI] --> B[API Gateway]
+    B --> C{NLP Engine}
+    C -->|Text Processing| D[Transformers Model]
+    C -->|Embeddings| E[(Vector DB)]
+    D --> F[Generator]
+    E --> F
+    F --> B
+      `;
+    case 'Blockchain':
+      return `
+graph LR
+    A[DApp UI] --> B[Wallet Provider]
+    B --> C{Smart Contract}
+    C --> D((Blockchain Network))
+    C --> E[(IPFS Storage)]
+      `;
+    case 'CV':
+    case 'AI':
+    case 'ML':
+    case 'DL':
+      return `
+graph TD
+    A[Data Ingestion] --> B[Preprocessing]
+    B --> C[Inference Engine]
+    C --> D[(Model Registry)]
+    C --> E[Results Dashboard]
+      `;
+    default:
+      return `
+graph TD
+    A[Frontend App] --> B[API Layer]
+    B --> C[(Primary Database)]
+    B --> D[External Services]
+      `;
+  }
+}
 
 export function ProjectModal({ project, onClose, user, setShowAuth }: { project: Project, onClose: () => void, user: User | null, setShowAuth: (v: boolean) => void }) {
   const dc = domainColorMap[project.domain] || { color: '#C9A84C' };
   
   return (
     <div className="auth-overlay" style={{ position: 'fixed', inset: 0, background: 'rgba(5,8,16,0.95)', backdropFilter: 'blur(20px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }} onClick={onClose}>
-      <TiltCard className="anti-gravity-card" style={{ width: '100%', maxWidth: 800, maxHeight: '90vh', overflowY: 'auto', padding: 40, position: 'relative', border: `1px solid ${dc.color}40`, boxShadow: `0 0 40px ${dc.color}20`, cursor: 'default' } as any} onClick={e => e.stopPropagation()}>
+      <TiltCard className="anti-gravity-card" style={{ width: '100%', maxWidth: 1000, maxHeight: '90vh', overflowY: 'auto', padding: 40, position: 'relative', border: `1px solid ${dc.color}40`, boxShadow: `0 0 40px ${dc.color}20`, cursor: 'default' } as any} onClick={e => e.stopPropagation()}>
         <button onClick={onClose} style={{ position: 'absolute', top: 24, right: 24, background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', fontSize: 24, zIndex: 10 }}>✕</button>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -25,12 +69,15 @@ export function ProjectModal({ project, onClose, user, setShowAuth }: { project:
           </div>
           
           {/* Main content grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 32 }}>
             <div>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--text-primary)', marginBottom: 16 }}>Tech Stack</h3>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {project.tech.map(t => (
-                  <span key={t} style={{ fontFamily: 'JetBrains Mono', fontSize: 12, padding: '6px 12px', background: 'var(--white-5)', borderRadius: 6, color: 'var(--text-primary)', border: '1px solid var(--white-10)' }}>{t}</span>
+                  <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'JetBrains Mono', fontSize: 12, padding: '6px 12px', background: 'var(--white-5)', borderRadius: 6, color: 'var(--text-primary)', border: '1px solid var(--white-10)' }}>
+                    <TechIcon tech={t} size={14} />
+                    {t}
+                  </span>
                 ))}
               </div>
               
@@ -44,33 +91,42 @@ export function ProjectModal({ project, onClose, user, setShowAuth }: { project:
                   <li>Plagiarism Free Report Support</li>
                 </ul>
               </div>
+
+              {project.isPremium && (
+                <div style={{ marginTop: 32 }}>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--text-primary)', marginBottom: 16 }}>Architecture Overview</h3>
+                  <MermaidDiagram chart={getArchitectureChart(project.domain)} />
+                </div>
+              )}
             </div>
             
-            <div style={{ background: 'var(--glass-base)', borderRadius: 16, padding: 24, border: '1px solid var(--border-glass)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 24, paddingBottom: 24, borderBottom: '1px solid var(--white-10)' }}>
-                <div>
-                  <div style={{ fontSize: 14, color: 'var(--text-secondary)', fontFamily: 'var(--font-text)', marginBottom: 4 }}>Total Price</div>
-                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 32, color: 'var(--text-primary)' }}>₹{project.price.toLocaleString()}</div>
+            <div style={{ alignSelf: 'start' }}>
+              <div style={{ background: 'var(--glass-base)', borderRadius: 16, padding: 24, border: '1px solid var(--border-glass)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 24, paddingBottom: 24, borderBottom: '1px solid var(--white-10)' }}>
+                  <div>
+                    <div style={{ fontSize: 14, color: 'var(--text-secondary)', fontFamily: 'var(--font-text)', marginBottom: 4 }}>Total Price</div>
+                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 32, color: 'var(--text-primary)' }}>₹{project.price.toLocaleString()}</div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: 14, color: 'var(--text-secondary)', fontFamily: 'var(--font-text)', marginBottom: 4 }}>Delivery in</div>
+                    <div style={{ fontFamily: 'JetBrains Mono', fontSize: 16, color: 'var(--text-primary)' }}>{project.deliveryDays}</div>
+                  </div>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 14, color: 'var(--text-secondary)', fontFamily: 'var(--font-text)', marginBottom: 4 }}>Delivery in</div>
-                  <div style={{ fontFamily: 'JetBrains Mono', fontSize: 16, color: 'var(--text-primary)' }}>{project.deliveryDays}</div>
-                </div>
+                
+                {user ? (
+                  <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: 12 }}>
+                    Proceed to Payment
+                  </button>
+                ) : (
+                  <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: 12 }} onClick={() => { onClose(); setShowAuth(true); }}>
+                    Sign in to Purchase
+                  </button>
+                )}
+                
+                <a href={`https://wa.me/919515667238?text=Hi, I am interested in project ${project.id}: ${project.title}`} target="_blank" rel="noreferrer" className="anti-gravity-card fluid-link" style={{ width: '100%', textAlign: 'center', display: 'block', padding: '12px' }}>
+                  Chat on WhatsApp
+                </a>
               </div>
-              
-              {user ? (
-                <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: 12 }}>
-                  Proceed to Payment
-                </button>
-              ) : (
-                <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: 12 }} onClick={() => { onClose(); setShowAuth(true); }}>
-                  Sign in to Purchase
-                </button>
-              )}
-              
-              <a href={`https://wa.me/919515667238?text=Hi, I am interested in project ${project.id}: ${project.title}`} target="_blank" rel="noreferrer" className="anti-gravity-card fluid-link" style={{ width: '100%', textAlign: 'center', display: 'block', padding: '12px' }}>
-                Chat on WhatsApp
-              </a>
             </div>
           </div>
         </div>
@@ -78,3 +134,4 @@ export function ProjectModal({ project, onClose, user, setShowAuth }: { project:
     </div>
   )
 }
+
