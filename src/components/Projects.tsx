@@ -242,7 +242,7 @@ export function Projects() {
                 const dc2 = domainColorMap[p.domain] || { color: 'var(--text-primary)', bg: 'var(--white-10)' }
                 return (
                   <TiltCard key={p.id} className="anti-gravity-card project-card" style={{ border: `1px solid var(--white-5)`, '--domain-color': dc2.color } as React.CSSProperties}>
-                    <div className="card-top" style={{ background: 'var(--white-2)', position: 'relative' }}>
+                    <div className="card-top" style={{ background: 'var(--white-2)', position: 'relative', aspectRatio: '16/9', overflow: 'hidden' }}>
                       {active3D === p.id ? (
                         <WebXRViewer domain={p.domain} />
                       ) : p.image ? (

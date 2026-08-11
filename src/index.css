@@ -503,6 +503,17 @@ a, button {
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
 }
+.premium-badge {
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-sec));
+  color: #000;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+  box-shadow: 0 2px 10px rgba(201, 168, 76, 0.3);
+}
 .card-footer {
   margin-top: auto;
   display: flex;
