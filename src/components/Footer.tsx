@@ -7,12 +7,12 @@ export function Footer() {
 
   return (
     <footer style={{ background: 'var(--bg-void)', color: 'white', paddingTop: 60 }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 48px', textAlign: 'center' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 48px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 16 }}>
           <XenLogo size={42} />
         </div>
-        <p style={{ fontFamily: 'var(--font-text)', fontSize: 13, color: 'var(--white-40)', marginBottom: 28 }}>India's #1 Final Year Project Mentorship Platform</p>
+        <p style={{ fontFamily: 'var(--font-text)', fontSize: 13, color: 'var(--white-40)', marginBottom: 28, maxWidth: '100%' }}>India's #1 Final Year Project Mentorship Platform</p>
 
         {/* Social */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 32 }}>
@@ -39,7 +39,7 @@ export function Footer() {
             </button>
           ))}
         </div>
-        <div style={{ height: 1, background: 'var(--white-6)', marginBottom: 20 }} />
+        <div style={{ width: '100%', height: 1, background: 'var(--white-6)', marginBottom: 20 }} />
         <p style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--white-25)' }}>© 2025 XEN-O1. All Rights Reserved. | www.xen-o1.com</p>
       </div>
 
