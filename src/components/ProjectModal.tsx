@@ -15,7 +15,7 @@ export function ProjectModal({ project, onClose, user, setShowAuth }: { project:
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
               <span className="tag-pill" style={{ background: `${dc.color}20`, color: dc.color, border: `1px solid ${dc.color}40` }}>{project.domain}</span>
-              <span className="tag-pill" style={{ background: project.difficulty === 'Beginner' ? 'rgba(34,197,94,0.1)' : project.difficulty === 'Intermediate' ? 'rgba(234,179,8,0.1)' : 'rgba(239,68,68,0.1)', color: project.difficulty === 'Beginner' ? '#16A34A' : project.difficulty === 'Intermediate' ? '#CA8A04' : '#DC2626', border: 'none' }}>
+              <span className="tag-pill" style={{ background: project.difficulty === 'Easy' ? 'rgba(34,197,94,0.1)' : project.difficulty === 'Medium' ? 'rgba(234,179,8,0.1)' : 'rgba(239,68,68,0.1)', color: project.difficulty === 'Easy' ? '#16A34A' : project.difficulty === 'Medium' ? '#CA8A04' : '#DC2626', border: 'none' }}>
                 {project.difficulty}
               </span>
               {project.isPremium && <span className="premium-badge">PREMIUM</span>}
