@@ -11,6 +11,7 @@ import { Stats } from '../components/Stats'
 import { Testimonials } from '../components/Testimonials'
 import { Blog } from '../components/Blog'
 import { Contact } from '../components/Contact'
+import { VercelFeatures } from '../components/VercelFeatures'
 export function Home({ user, setShowAuth }: { user: User | null, setShowAuth: (s: boolean) => void }) {
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export function Home({ user, setShowAuth }: { user: User | null, setShowAuth: (s
       <Hero />
       <FeaturedStack />
       <Domains />
+      <VercelFeatures />
       <Projects />
       <Services />
       <Research />
