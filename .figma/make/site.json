@@ -1,0 +1,10 @@
+{
+  "description": "Discover and filter educational projects by price, difficulty, and more on a sleek, interactive platform designed for learners across all devices.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

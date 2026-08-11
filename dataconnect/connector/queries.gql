@@ -1,0 +1,23 @@
+query ListProjects @auth(level: PUBLIC) {
+  projects(orderBy: [{ createdAt: DESC }]) {
+    id
+    title
+    domain
+    techStack
+    image
+    description
+    createdAt
+  }
+}
+
+query GetProject($id: UUID!) @auth(level: PUBLIC) {
+  project(id: $id) {
+    id
+    title
+    domain
+    techStack
+    image
+    description
+    createdAt
+  }
+}

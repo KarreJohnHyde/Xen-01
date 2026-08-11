@@ -1,0 +1,23 @@
+mutation CreateProject(
+  $title: String!
+  $domain: String!
+  $techStack: [String!]!
+  $image: String!
+  $description: String!
+) @auth(level: USER) {
+  project_insert(data: {
+    title: $title,
+    domain: $domain,
+    techStack: $techStack,
+    image: $image,
+    description: $description
+  })
+}
+
+mutation CreateUser($email: String!, $displayName: String) @auth(level: USER) {
+  user_upsert(data: {
+    uid_expr: "auth.uid",
+    email: $email,
+    displayName: $displayName
+  })
+}

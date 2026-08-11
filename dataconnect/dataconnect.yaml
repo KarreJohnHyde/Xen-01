@@ -1,0 +1,11 @@
+specVersion: "v1"
+serviceId: "xeno1"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "xeno1db"
+      cloudSql:
+        instanceId: "xeno1-instance"
+connectorDirs: ["./connector"]
