@@ -19,6 +19,7 @@
     "express": "^4.21.2",
     "firebase": "^12.17.1",
     "lucide-react": "^0.470.0",
+    "mermaid": "^11.16.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
